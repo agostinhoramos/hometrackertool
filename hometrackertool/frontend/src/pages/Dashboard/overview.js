@@ -3,6 +3,7 @@ import {
   UserAddIcon,
   UserRemoveIcon,
   UserCircleIcon,
+  UserIcon,
   UserGroupIcon,
   ChevronDownIcon,
   ChevronRightIcon,
@@ -11,9 +12,9 @@ import {
 } from '@heroicons/react/outline'
 
 const cards = [
-  { name: 'People Inside', href: '#', icon: UserAddIcon, amount: '5' },
-  { name: 'People Outside', href: '#', icon: UserRemoveIcon, amount: '2' },
-  { name: 'Total people', href: '#', icon: UserGroupIcon, amount: '7' },
+  { name: 'People Inside', icon: UserAddIcon, background: 'bg-green-100', color: 'text-green-800', number: '5' },
+  { name: 'People Pending', icon: UserIcon, background: 'bg-yellow-100', color: 'text-yellow-800', number: '2' },
+  { name: 'People Outside', icon: UserRemoveIcon, background: 'bg-gray-100', color: 'text-gray-800', number: '2' },
 ]
 
 const statusStyles = {
@@ -85,16 +86,16 @@ const Overview = () => {
                 {/* Card */}
                 {cards.map((card) => (
                   <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg">
-                    <div className="p-5">
-                      <div className="flex items-center">
+                    <div className={`p-5 ${card.background}`}>
+                      <div className={`flex items-center`} >
                         <div className="flex-shrink-0">
-                          <card.icon className="h-6 w-6 text-gray-400" aria-hidden="true" />
+                          <card.icon className={`h-6 w-6 text-gray-400 ${card.color}`} aria-hidden="true" />
                         </div>
                         <div className="ml-5 w-0 flex-1">
                           <dl>
                             <dt className="text-sm font-medium text-gray-500 truncate">{card.name}</dt>
                             <dd>
-                              <div className="text-4xl font-medium text-gray-900">{card.amount}</div>
+                              <div className={`text-4xl font-medium ${card.color}`} >{card.number}</div>
                             </dd>
                           </dl>
                         </div>
