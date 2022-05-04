@@ -21,9 +21,9 @@ const pages = [
 const navigation = [
     { name: 'Overview', link: '/', icon: HomeIcon },
 	{ name: 'Profiles', link: '/profiles', icon: UsersIcon },
-    { name: 'Rule Chains', link: '/rule_chains', icon: CursorClickIcon },
+    //{ name: 'Rule Chains', link: '/rule_chains', icon: CursorClickIcon },
     { name: 'Scheduler', link: '/scheduler', icon: CalendarIcon },
-    { name: 'Integrations', link: '/integrations', icon: ChipIcon },
+    //{ name: 'Integrations', link: '/integrations', icon: ChipIcon },
     { name: 'Settings', link: '/settings', icon: CogIcon },
 	{ name: 'About', link: '/about', icon: InformationCircleIcon },
 ]
