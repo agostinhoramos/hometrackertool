@@ -1,9 +1,8 @@
 import { Fragment, useState } from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, NavLink, useLocation } from 'react-router-dom'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
-  ChartBarIcon,
   HomeIcon,
   CursorClickIcon,
   CalendarIcon,
@@ -20,18 +19,18 @@ const pages = [
 ]
 
 const navigation = [
-    { name: 'Overview', link: '/', icon: HomeIcon, current: true },
-	{ name: 'Profiles', link: '/profiles', icon: UsersIcon, current: false },
-    { name: 'Rule Chains', link: '/rule_chains', icon: CursorClickIcon, current: false },
-    { name: 'Scheduler', link: '/scheduler', icon: CalendarIcon, current: false },
-    { name: 'Integrations', link: '/integrations', icon: ChipIcon, current: false },
-    { name: 'Settings', link: '/settings', icon: CogIcon, current: false },
-	{ name: 'About', link: '/about', icon: InformationCircleIcon, current: false },
+    { name: 'Overview', link: '/', icon: HomeIcon },
+	{ name: 'Profiles', link: '/profiles', icon: UsersIcon },
+    { name: 'Rule Chains', link: '/rule_chains', icon: CursorClickIcon },
+    { name: 'Scheduler', link: '/scheduler', icon: CalendarIcon },
+    { name: 'Integrations', link: '/integrations', icon: ChipIcon },
+    { name: 'Settings', link: '/settings', icon: CogIcon },
+	{ name: 'About', link: '/about', icon: InformationCircleIcon },
 ]
 const userNavigation = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Your Profile', href: '/profile' },
+    { name: 'Settings', href: '/settings' },
+    { name: 'Sign out', href: '/login' },
 ]
 
 function classNames(...classes) {
@@ -40,7 +39,8 @@ function classNames(...classes) {
 
 
 const Layout = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const location = useLocation();
 
     return (
         <>
@@ -89,36 +89,35 @@ const Layout = () => {
                     </div>
                     </Transition.Child>
                     <div className="flex-shrink-0 flex items-center px-4">
-                    <img
-                        className="h-8 w-auto"
-                        src="icoisas.png"
-                        alt="Workflow"
-                    />
+                    <h3 className='font-bold text-xl text-blue-600'>Home Tracker Tool</h3>
                     </div>
                     <div className="mt-5 flex-1 h-0 overflow-y-auto">
+                    
                     <nav className="px-2 space-y-1">
                         {navigation.map((item) => (
-                        <Link
-                            key={item.name}
+                        <NavLink
                             to={item.link}
                             className={classNames(
-                            item.current
+                            (location.pathname === item.link)
                                 ? 'bg-gray-100 text-gray-900'
                                 : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                             'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                             )}
+							activeClassName={"bg-gray-100 text-gray-900"}
                         >
                             <item.icon
                             className={classNames(
-                                item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                                (location.pathname === item.link) ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
                                 'mr-4 flex-shrink-0 h-6 w-6'
                             )}
                             aria-hidden="true"
                             />
                             {item.name}
-                        </Link>
+                        </NavLink>
                         ))}
                     </nav>
+                    
+
                     </div>
                 </div>
                 </Transition.Child>
@@ -138,23 +137,23 @@ const Layout = () => {
                 <div className="mt-5 flex-grow flex flex-col">
                 <nav className="flex-1 px-2 pb-4 space-y-1">
                     {navigation.map((item) => (
-                    <Link
+                    <NavLink
                         key={item.name}
                         to={item.link}
                         className={classNames(
-                        item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                        (location.pathname === item.link) ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                         'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                         )}
-                    >
+						>
                         <item.icon
                         className={classNames(
-                            item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                            (location.pathname === item.link) ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
                             'mr-3 flex-shrink-0 h-6 w-6'
                         )}
                         aria-hidden="true"
                         />
                         {item.name}
-                    </Link>
+                    </NavLink>
                     ))}
                 </nav>
                 </div>
@@ -179,6 +178,13 @@ const Layout = () => {
                             <a href="#" className="text-gray-400 hover:text-gray-500">
                             <HomeIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
                             <span className="sr-only">Home</span>
+                            </a>
+                        </div>
+                        </li>
+                        <li>
+                        <div>
+                            <a href="#" className="text-gray-400 hover:text-gray-500">
+                                { location.pathname }
                             </a>
                         </div>
                         </li>
@@ -241,7 +247,7 @@ const Layout = () => {
                         {userNavigation.map((item) => (
                             <Menu.Item key={item.name}>
                             {({ active }) => (
-                                <Link
+                                <NavLink
                                 to={item.href}
                                 className={classNames(
                                     active ? 'bg-gray-100' : '',
@@ -249,7 +255,7 @@ const Layout = () => {
                                 )}
                                 >
                                 {item.name}
-                                </Link>
+                                </NavLink>
                             )}
                             </Menu.Item>
                         ))}

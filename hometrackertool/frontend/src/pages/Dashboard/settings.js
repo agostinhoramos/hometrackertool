@@ -1,15 +1,6 @@
 import { useState } from 'react'
 import { Switch } from '@headlessui/react'
 
-const tabs = [
-  { name: 'General', href: '#', current: true },
-  { name: 'Password', href: '#', current: false },
-  { name: 'Notifications', href: '#', current: false },
-  { name: 'Plan', href: '#', current: false },
-  { name: 'Billing', href: '#', current: false },
-  { name: 'Team Members', href: '#', current: false },
-]
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -24,7 +15,7 @@ const Settings = () => {
         <div className="mt-5 p-5">
           <div className="w-full">
             <div className="pb-5">
-              <div className="px-4 sm:px-6 md:px-0">
+              <div className="px-4">
                 {/* Description list with inline editing */}
                 <div className="divide-y divide-gray-200">
                   <div className="space-y-1">
@@ -35,7 +26,7 @@ const Settings = () => {
                   </div>
                   <div className="mt-6">
                     <dl className="divide-y divide-gray-200">
-                      <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                      <div className="py-4">
                         <dt className="text-sm font-medium text-gray-500">Name</dt>
                         <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                           <span className="flex-grow">Chelsea Hagon</span>
