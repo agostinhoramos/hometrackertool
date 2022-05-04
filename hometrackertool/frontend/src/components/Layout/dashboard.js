@@ -1,12 +1,10 @@
 import { Fragment, useState } from 'react'
-import { Outlet, NavLink, useLocation } from 'react-router-dom'
+import { Outlet, Link, useLocation } from 'react-router-dom'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
   HomeIcon,
-  CursorClickIcon,
   CalendarIcon,
-  ChipIcon,
   MenuAlt2Icon,
   UsersIcon,
   CogIcon,
@@ -95,7 +93,7 @@ const Layout = () => {
                     
                     <nav className="px-2 space-y-1">
                         {navigation.map((item) => (
-                        <NavLink
+                        <Link
                             to={item.link}
                             className={classNames(
                             (location.pathname === item.link)
@@ -113,7 +111,7 @@ const Layout = () => {
                             aria-hidden="true"
                             />
                             {item.name}
-                        </NavLink>
+                        </Link>
                         ))}
                     </nav>
                     
@@ -137,7 +135,7 @@ const Layout = () => {
                 <div className="mt-5 flex-grow flex flex-col">
                 <nav className="flex-1 px-2 pb-4 space-y-1">
                     {navigation.map((item) => (
-                    <NavLink
+                    <Link
                         key={item.name}
                         to={item.link}
                         className={classNames(
@@ -153,7 +151,7 @@ const Layout = () => {
                         aria-hidden="true"
                         />
                         {item.name}
-                    </NavLink>
+                    </Link>
                     ))}
                 </nav>
                 </div>
@@ -172,20 +170,20 @@ const Layout = () => {
                 <div className="flex-1 px-4 flex justify-between">
                 <div className="flex-1 flex">
                     <nav className="flex" aria-label="Breadcrumb">
-                    <ol role="list" className="flex items-center space-x-4">
+                    <ol className="flex items-center space-x-4">
                         <li>
                         <div>
-                            <a href="#" className="text-gray-400 hover:text-gray-500">
+                            <Link to="#" className="text-gray-400 hover:text-gray-500">
                             <HomeIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
                             <span className="sr-only">Home</span>
-                            </a>
+                            </Link>
                         </div>
                         </li>
                         <li>
                         <div>
-                            <a href="#" className="text-gray-400 hover:text-gray-500">
+                            <Link to="#" className="text-gray-400 hover:text-gray-500">
                                 { location.pathname }
-                            </a>
+                            </Link>
                         </div>
                         </li>
                         {pages.map((page) => (
@@ -200,13 +198,13 @@ const Layout = () => {
                             >
                                 <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
                             </svg>
-                            <a
-                                href={page.href}
+                            <Link
+                                to={page.href}
                                 className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
                                 aria-current={page.current ? 'page' : undefined}
                             >
                                 {page.name}
-                            </a>
+                            </Link>
                             </div>
                         </li>
                         ))}
@@ -247,7 +245,7 @@ const Layout = () => {
                         {userNavigation.map((item) => (
                             <Menu.Item key={item.name}>
                             {({ active }) => (
-                                <NavLink
+                                <Link
                                 to={item.href}
                                 className={classNames(
                                     active ? 'bg-gray-100' : '',
@@ -255,7 +253,7 @@ const Layout = () => {
                                 )}
                                 >
                                 {item.name}
-                                </NavLink>
+                                </Link>
                             )}
                             </Menu.Item>
                         ))}

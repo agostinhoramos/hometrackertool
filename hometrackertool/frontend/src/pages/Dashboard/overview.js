@@ -1,20 +1,15 @@
+import { Link } from 'react-router-dom'
 import {
-  CashIcon,
   UserAddIcon,
   UserRemoveIcon,
   UserCircleIcon,
   UserIcon,
-  UserGroupIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  OfficeBuildingIcon,
-  SearchIcon,
 } from '@heroicons/react/outline'
 
 const cards = [
-  { name: 'People Inside', icon: UserAddIcon, background: 'bg-green-100', color: 'text-green-800', number: '5' },
-  { name: 'People Pending', icon: UserIcon, background: 'bg-yellow-100', color: 'text-yellow-800', number: '2' },
-  { name: 'People Outside', icon: UserRemoveIcon, background: 'bg-gray-100', color: 'text-gray-800', number: '2' },
+  { name: 'People Inside', icon: UserAddIcon, background: 'bg-green-100', color: 'text-green-800', number: 5 },
+  { name: 'People Pending', icon: UserIcon, background: 'bg-yellow-100', color: 'text-yellow-800', number: 0 },
+  { name: 'People Outside', icon: UserRemoveIcon, background: 'bg-gray-100', color: 'text-gray-800', number: 2 },
 ]
 
 const statusStyles = {
@@ -182,18 +177,18 @@ const Overview = () => {
                         </p>
                       </div>
                       <div className="flex-1 flex justify-between sm:justify-end">
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                         >
                           Previous
-                        </a>
-                        <a
-                          href="#"
+                        </Link>
+                        <Link
+                          to="#"
                           className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                         >
                           Next
-                        </a>
+                        </Link>
                       </div>
                     </nav>
                   </div>
