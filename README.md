@@ -1,6 +1,7 @@
 
 Getting start
 
+- ~$ cd /var/opt/hometrackertool
 - /var/opt/hometrackertool$ poetry shell
 - /var/opt/hometrackertool$ . start.sh
 
