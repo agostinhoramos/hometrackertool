@@ -1,8 +1,17 @@
 # Home Tracker Tool
 
+## How to install
+- ~$ cd /var/opt/
+- /var/opt/$ sudo apt install git && sudo git clone https://github.com/agostinhoramos/hometrackertool.git
+- /var/opt/$ sudo chown -R $USER:$USER ../opt/
+- /var/opt/$ cd /var/opt/hometrackertool/install
+- /var/opt/hometrackertool/install$ . setup.sh
+
+
 ## Getting start
-- ~$ cd /var/opt/hometrackertool
+- /var/opt/$ cd /var/opt/hometrackertool
 - /var/opt/hometrackertool$ poetry shell
+- /var/opt/hometrackertool$ poetry install
 - /var/opt/hometrackertool$ . start.sh
 
 ## Tecnologies:

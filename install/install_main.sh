@@ -46,6 +46,7 @@ if [ $enable_postgresql -ge 1 ]; then
     sleep 1
 fi
 
+# 
 if [ $enable_nodejs -ge 1 ]; then
     sudo apt update
     curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
@@ -54,13 +55,40 @@ if [ $enable_nodejs -ge 1 ]; then
     node -v
 fi
 
+# 
 if [ $enable_nodejs_npm -ge 1 ]; then
     sudo apt update
     sudo apt install npm -y
     sudo npm -g install create-react-app
 fi
 
+#
+if [ $enable_apache2 -ge 1 ]; then
+    sudo apt update
+    sudo apt purge apache2 -y
+    sudo apt install apache2 -y
+    sudo ufw allow 'Apache'
+    sudo systemctl restart apache2
+    sudo ufw status
+    sudo systemctl status apache2
+
+    sudo a2enmod ssl
+    sudo a2enmod lbmethod_byrequests
+    sudo a2enmod rewrite
+    sudo a2enmod deflate
+    sudo a2enmod headers
+    sudo a2enmod proxy
+    sudo a2enmod proxy_http
+    sudo a2enmod proxy_ajp
+    sudo a2enmod proxy_connect
+    sudo a2enmod proxy_balancer
+    sudo a2enmod proxy_html
+
+    source /var/opt/hometrackertool/install/conf_apache.sh
+    sleep 1
+fi
+
 # Install others
 sudo pip install python-dotenv
 
-cd /var/opt/htt_auto_install
+cd /var/opt/hometrackertool
