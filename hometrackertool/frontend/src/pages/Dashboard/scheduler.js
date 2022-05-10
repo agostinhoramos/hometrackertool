@@ -1,5 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
+import { Link } from 'react-router-dom'
+
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -142,54 +144,54 @@ export default function Scheduler() {
                     <div className="py-1">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            to="#"
                             className={classNames(
                               active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                               'block px-4 py-2 text-sm'
                             )}
                           >
                             Day view
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            to="#"
                             className={classNames(
                               active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                               'block px-4 py-2 text-sm'
                             )}
                           >
                             Week view
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            to="#"
                             className={classNames(
                               active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                               'block px-4 py-2 text-sm'
                             )}
                           >
                             Month view
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            to="#"
                             className={classNames(
                               active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                               'block px-4 py-2 text-sm'
                             )}
                           >
                             Year view
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                     </div>
@@ -223,84 +225,84 @@ export default function Scheduler() {
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
                           )}
                         >
                           Create event
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                   </div>
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
                           )}
                         >
                           Go to today
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                   </div>
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
                           )}
                         >
                           Day view
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
                           )}
                         >
                           Week view
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
                           )}
                         >
                           Month view
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
                           )}
                         >
                           Year view
-                        </a>
+                        </Link>
                       )}
                     </Menu.Item>
                   </div>
@@ -357,7 +359,7 @@ export default function Scheduler() {
                     <ol className="mt-2">
                       {day.events.slice(0, 2).map((event) => (
                         <li key={event.id}>
-                          <a href={event.href} className="group flex">
+                          <Link to={event.href} className="group flex">
                             <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
                               {event.name}
                             </p>
@@ -367,7 +369,7 @@ export default function Scheduler() {
                             >
                               {event.time}
                             </time>
-                          </a>
+                          </Link>
                         </li>
                       ))}
                       {day.events.length > 2 && <li className="text-gray-500">+ {day.events.length - 2} more</li>}
@@ -427,12 +429,12 @@ export default function Scheduler() {
                       {event.time}
                     </time>
                   </div>
-                  <a
-                    href={event.href}
+                  <Link
+                    to={event.href}
                     className="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100"
                   >
                     Edit<span className="sr-only">, {event.name}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ol>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { PencilAltIcon, EyeOffIcon, MinusCircleIcon } from '@heroicons/react/solid'
 import { PlusSmIcon as PlusSmIconOutline } from '@heroicons/react/outline'
 
@@ -31,7 +32,7 @@ const Profiles = () => {
     return (
       <>
         <div className="mt-5 p-5">
-        <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {people.map((person) => (
                 <li
                 key={person.email}
@@ -55,31 +56,31 @@ const Profiles = () => {
                 <div>
                     <div className="-mt-px flex divide-x divide-gray-200">
                     <div className="w-0 flex-1 flex hover:text-blue-500 text-gray-400 ">
-                        <a
-                        href={`mailto:${person.email}`}
+                        <Link
+                        to={`mailto:${person.email}`}
                         className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm  font-medium border border-transparent rounded-bl-lg "
                         >
                         <PencilAltIcon className="w-5 h-5" aria-hidden="true" />
                         <span className="ml-3">Edit</span>
-                        </a>
+                        </Link>
                     </div>
                     <div className="-ml-px w-0 flex-1 flex hover:text-yellow-500 text-gray-400">
-                        <a
-                        href={`tel:${person.telephone}`}
+                        <Link
+                        to={`tel:${person.telephone}`}
                         className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm  font-medium border border-transparent rounded-br-lg "
                         >
                         <EyeOffIcon className="w-5 h-5" aria-hidden="true" />
                         <span className="ml-3">Disable</span>
-                        </a>
+                        </Link>
                     </div>
                     <div className="-ml-px w-0 flex-1 flex hover:text-red-500 text-gray-400 ">
-                        <a
-                        href={`tel:${person.telephone}`}
+                        <Link
+                        to={`tel:${person.telephone}`}
                         className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm font-medium border border-transparent rounded-br-lg "
                         >
                         <MinusCircleIcon className="w-5 h-5 " aria-hidden="true" />
                         <span className="ml-3">Remove</span>
-                        </a>
+                        </Link>
                     </div>
                     </div>
                 </div>

@@ -98,9 +98,9 @@ const Overview = () => {
                     </div>
                     <div className="bg-gray-50 px-5 py-3">
                       <div className="text-sm">
-                        <a href={card.href} className="font-medium text-cyan-700 hover:text-cyan-900">
+                        <Link to={card.href} className="font-medium text-cyan-700 hover:text-cyan-900">
                           View all
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -134,7 +134,7 @@ const Overview = () => {
                           <tr key={transaction.id} className="bg-white">
                             <td className="max-w-0 w-full px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                               <div className="flex">
-                                <a href={transaction.href} className="group inline-flex space-x-2 truncate text-sm">
+                                <Link to={transaction.href} className="group inline-flex space-x-2 truncate text-sm">
                                   <UserCircleIcon
                                     className="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                                     aria-hidden="true"
@@ -142,7 +142,7 @@ const Overview = () => {
                                   <p className="text-gray-500 truncate group-hover:text-gray-900">
                                     {transaction.name}
                                   </p>
-                                </a>
+                                </Link>
                               </div>
                             </td>
                             <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">

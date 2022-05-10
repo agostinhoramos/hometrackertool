@@ -46,7 +46,7 @@ if [ $enable_postgresql -ge 1 ]; then
     sleep 1
 fi
 
-# 
+# Install NodeJS
 if [ $enable_nodejs -ge 1 ]; then
     sudo apt update
     curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
@@ -55,14 +55,14 @@ if [ $enable_nodejs -ge 1 ]; then
     node -v
 fi
 
-# 
+# Install NPM and React
 if [ $enable_nodejs_npm -ge 1 ]; then
     sudo apt update
     sudo apt install npm -y
     sudo npm -g install create-react-app
 fi
 
-#
+# Install apache2
 if [ $enable_apache2 -ge 1 ]; then
     sudo apt update
     sudo apt purge apache2 -y
