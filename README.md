@@ -12,6 +12,9 @@
 - /var/opt/$ cd /var/opt/hometrackertool
 - /var/opt/hometrackertool$ poetry shell
 - /var/opt/hometrackertool$ poetry install
+- /var/opt/hometrackertool$ cd hometrackertool/frontend
+- /var/opt/hometrackertool/hometrackertool/frontend$ npm install
+- /var/opt/$ cd /var/opt/hometrackertool
 - /var/opt/hometrackertool$ . start.sh
 
 ## Tecnologies:
