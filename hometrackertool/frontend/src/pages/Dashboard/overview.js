@@ -7,9 +7,9 @@ import {
 } from '@heroicons/react/outline'
 
 const cards = [
-  { name: 'People Inside', icon: UserAddIcon, background: 'bg-green-100', color: 'text-green-800', number: 5 },
-  { name: 'People Pending', icon: UserIcon, background: 'bg-yellow-100', color: 'text-yellow-800', number: 0 },
-  { name: 'People Outside', icon: UserRemoveIcon, background: 'bg-gray-100', color: 'text-gray-800', number: 2 },
+  { name: 'People Inside', icon: UserAddIcon, background: 'bg-green-100', color: 'text-green-800', number: 5, href: "/#view_more" },
+  { name: 'People Pending', icon: UserIcon, background: 'bg-yellow-100', color: 'text-yellow-800', number: 0, href: "/#view_more" },
+  { name: 'People Outside', icon: UserRemoveIcon, background: 'bg-gray-100', color: 'text-gray-800', number: 2, href: "/#view_more" },
 ]
 
 const statusStyles = {

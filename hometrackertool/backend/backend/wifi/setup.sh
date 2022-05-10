@@ -3,11 +3,9 @@
 # Script must run as root
 if [[ $EUID -gt 0 ]]; then # we can compare directly with this syntax.
     echo "Please run as root/sudo"
-    exit 1
 fi
 
-
-##### CONFIGURATIONS TO BE CHANGED ####
+# CONFIGURATIONS TO BE CHANGED ####
 WLAN0="wlan0"
 WLAN1="wlan1"
 
@@ -19,19 +17,15 @@ wlan1_network="/etc/systemd/network/12-wlan1.network"
 
 ORIGINAL_SSID="CASA RAMOS"
 ORIGINAL_PASS="ngueTela"
-NEW_SSID="RASPI"
-NEW_PASS="ngueTela"
+NEW_SSID=$ORIGINAL_SSID
+NEW_PASS=$ORIGINAL_PASS
 
 generate_wpa2_psk() {
     wpa_passphrase $1 $2 |grep -E 'psk' | grep -v "#psk" | cut -d '=' -f 2
 }
 
 validate_configurations() {
-    echo
-    echo
-    echo
     echo "Current configurations: "
-    echo
     echo "WLAN0: $WLAN0"
     echo "WLAN1: $WLAN1"
     echo "ORIGINAL_SSID: $ORIGINAL_SSID"
@@ -77,7 +71,6 @@ config_wpsup() {
         echo "}"
     } > $wp0conf
     chmod 600 $wp0conf
-    # Restart wpa_supplicant service
     systemctl disable wpa_supplicant.service
     systemctl enable wpa_supplicant@wlan0.service
 }
