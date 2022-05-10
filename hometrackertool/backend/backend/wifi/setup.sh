@@ -1,41 +1,20 @@
-#!/usr/bin/bash
-
-# Script must run as root
-if [[ $EUID -gt 0 ]]; then # we can compare directly with this syntax.
-    echo "Please run as root/sudo"
-fi
+#!/bin/bash
 
 # CONFIGURATIONS TO BE CHANGED ####
 WLAN0="wlan0"
 WLAN1="wlan1"
 
-# Config files, don't change
-wp0conf="/etc/wpa_supplicant/wpa_supplicant-wlan0.conf"
-ws_wlan1="/etc/wpa_supplicant/wpa_supplicant-wlan1.conf"
-wlan0_network="/etc/systemd/network/08-wlan0.network"
-wlan1_network="/etc/systemd/network/12-wlan1.network"
-
-ORIGINAL_SSID="CASA RAMOS"
-ORIGINAL_PASS="ngueTela"
-NEW_SSID=$ORIGINAL_SSID
-NEW_PASS=$ORIGINAL_PASS
-
-generate_wpa2_psk() {
-    wpa_passphrase $1 $2 |grep -E 'psk' | grep -v "#psk" | cut -d '=' -f 2
-}
-
-validate_configurations() {
+## ALL FUNCTIONS
+show_configurations() {
     echo "Current configurations: "
     echo "WLAN0: $WLAN0"
     echo "WLAN1: $WLAN1"
-    echo "ORIGINAL_SSID: $ORIGINAL_SSID"
-    echo "ORIGINAL_PASS: $ORIGINAL_PASS"
     echo "NEW_SSID: $NEW_SSID"
     echo "NEW_PASS: $NEW_PASS"
+    echo "NETWORK: $NETWORK"
+    echo "COUNTRY: $COUNTRY"
     sleep 1
 }
-
-
 check_interfaces() {
     echo "Checking interfaces..."
     output=$(/sbin/iw dev)
@@ -46,7 +25,6 @@ check_interfaces() {
         exit 1
     fi
 }
-
 setup_systemd_networkd() {
     systemctl mask networking.service dhcpcd.service
     mv /etc/network/{interfaces,interfaces~} # Backup file
@@ -55,11 +33,9 @@ setup_systemd_networkd() {
     systemctl enable systemd-networkd.service systemd-resolved.service
     ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 }
-
-
 config_wpsup() {
     {
-        echo "country=IN"
+        echo "country=$COUNTRY"
         echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
         echo "update_config=1"
         echo "network={"
@@ -74,17 +50,15 @@ config_wpsup() {
     systemctl disable wpa_supplicant.service
     systemctl enable wpa_supplicant@wlan0.service
 }
-
-
-
 setup_wlan1_client() {
     {
-        echo "country=IN"
+        echo "country=$COUNTRY"
         echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev"
         echo "update_config=1"
         echo "network={"
         echo '  ssid="'$ORIGINAL_SSID'"'
-        echo '  psk="'${ORIGINAL_PASS}'"'
+        echo '  psk="'$ORIGINAL_PASS'"'
+        echo '  key_mgmt=WPA-PSK'
         echo "}"
     } > $ws_wlan1
 
@@ -92,22 +66,18 @@ setup_wlan1_client() {
     systemctl disable wpa_supplicant.service
     systemctl enable wpa_supplicant@wlan1.service
 }
-
-
-
 configure_interfaces() {
     {
         echo "[Match]"
         echo "Name=$WLAN0"
         echo "[Network]"
-        echo "Address=192.168.6.1/24"
+        echo "Address=192.168.$NETWORK.1/24"
         echo "IPMasquerade=yes"
         echo "IPForward=yes"
         echo "DHCPServer=yes"
         echo "[DHCPServer]"
-        echo "DNS=1.1.1.1"
+        echo "DNS=8.8.8.8"
     } > $wlan0_network
-
 
     {
         echo "[Match]"
@@ -117,27 +87,35 @@ configure_interfaces() {
     } > $wlan1_network
 }
 
+# Config files, don't change
+wp0conf="/etc/wpa_supplicant/wpa_supplicant-wlan0.conf"
+ws_wlan1="/etc/wpa_supplicant/wpa_supplicant-wlan1.conf"
+wlan0_network="/etc/systemd/network/08-wlan0.network"
+wlan1_network="/etc/systemd/network/12-wlan1.network"
 
+if [ "$1" == "add" ]; then
+    SSID="$2"
+    PASS="$3"
+    NETWORK="$4"
+    COUNTRY="$5"
 
-install() {
-    echo "Installing..."
-    validate_configurations
+    ORIGINAL_SSID="$SSID"
+    ORIGINAL_PASS="$PASS"
+    NEW_SSID="$ORIGINAL_SSID"
+    NEW_PASS="$ORIGINAL_PASS"
+
+    show_configurations
     check_interfaces
-    echo "setup_systemd_networkd..."
     setup_systemd_networkd
-    echo "config_wpsup"
     config_wpsup
-    echo "setup_wlan1_client..."
     setup_wlan1_client
-    echo "configure_interfaces"
     configure_interfaces
-    echo "done. rebooting..."
+    echo "Done. rebooting..."
     sleep 2
     /sbin/reboot
-}
+fi
 
-uninstall() {
-    echo "Uninstalling..."
+if [ "$1" == "remove" ]; then
     rm -rf $wp0conf $ws_wlan1 $wlan0_network $wlan1_network
     systemctl unmask networking.service dhcpcd.service
     mv /etc/network/{interfaces~,interfaces} # restore file
@@ -148,23 +126,4 @@ uninstall() {
     echo "done. rebooting..."
     sleep 2
     /sbin/reboot
-}
-
-
-
-# Starting point
-echo "Welcome!"
-echo "This script will turn your Raspberry pi into wifi extender! (repeater)"
-echo "Please choose your plan"
-echo "1. Install / reinstall"
-echo "2. Uninstall"
-echo "3. cancel"
-while true; do
-    read -p "Please choose: " answer
-    case $answer in
-        [1]* ) install; break;;
-        [2]* ) uninstall; break;;
-        [3]* ) exit 0;;
-        * ) echo "Please answer the correct number";;
-    esac
-done
+fi
