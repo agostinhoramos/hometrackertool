@@ -6,6 +6,7 @@ myApp_name="main.py"
 myApp_path="/var/opt/$service_name/"
 myApp_full_path="$myApp_path$myApp_name";
 service_path="/etc/systemd/system/$service_name.service";
+VIRTUAL_ENV="~/.cache/pypoetry/virtualenvs/hometrackertool-*/bin/activate"; # Poetry
 
 sudo chmod +x $myApp_full_path;
 sudo rm -rf $service_path;
@@ -18,8 +19,9 @@ sudo rm -rf $service_path;
     echo "[Service]"
     echo "Type=idle"
     echo "Restart=on-failure"
-    echo "User=root"
-    echo "ExecStart=/bin/bash -c 'cd $myApp_path && python $myApp_name'"
+    echo "User=master"
+    echo "WorkingDirectory=$myApp_path"
+    echo "ExecStart=/bin/bash -c '. $VIRTUAL_ENV && python $myApp_name'"
     echo ""
     echo "[Install]"
     echo "WantedBy=multi-user.target"
@@ -33,4 +35,4 @@ sudo systemctl status "$service_name.service";
 # disable a service
 #sudo systemctl disable hometrackertool.service
 # reload a service
-#sudo systemctl reload hometrackertool.service
+#sudo systemctl status hometrackertool.service

@@ -16,7 +16,7 @@ def main():
     ## RUN ALL THREADS ##
     func_threads = [
         [frontend.init, ([_])],
-        #[backend.init, ([_])],
+        [backend.init, ([_])],
     ]
 
     threads = []

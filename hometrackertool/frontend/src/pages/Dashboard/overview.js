@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   UserAddIcon,
@@ -5,6 +6,8 @@ import {
   UserCircleIcon,
   UserIcon,
 } from '@heroicons/react/outline'
+
+import api from '../../services/api';
 
 const cards = [
   { name: 'People Inside', icon: UserAddIcon, background: 'bg-green-100', color: 'text-green-800', number: 5, href: "/#view_more" },
@@ -18,59 +21,25 @@ const statusStyles = {
   'outside': 'bg-gray-100 text-gray-800',
 }
 
-const transactions = [
-  {
-    id: 1,
-    name: 'Agostinho Ramos',
-    href: '#',
-    mac_address: '24:11:45:E5:5B:F9',
-    status: 'inside',
-    date: 'July 11, 2020',
-    datetime: '2020-07-11',
-  },
-  {
-    id: 2,
-    name: 'Protásio Pina',
-    href: '#',
-    mac_address: '86:05:34:FA:B5:30',
-    status: 'Pending',
-    date: 'July 11, 2020',
-    datetime: '2020-07-11',
-  },
-  {
-    id: 3,
-    name: 'Bruno Ramos',
-    href: '#',
-    mac_address: '22:04:11:EC:BD:5C',
-    status: 'inside',
-    date: 'July 11, 2020',
-    datetime: '2020-07-11',
-  },
-  {
-    id: 4,
-    name: 'Gina Xavier',
-    href: '#',
-    mac_address: '86:05:34:FA:B5:30',
-    status: 'inside',
-    date: 'July 11, 2020',
-    datetime: '2020-07-11',
-  },
-  {
-    id: 5,
-    name: 'Verónica Jesus',
-    href: '#',
-    mac_address: '24:6F:8C:78:8D:5A',
-    status: 'outside',
-    date: 'July 11, 2020',
-    datetime: '2020-07-11',
-  },
-]
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Overview = () => {
+    const [activity, setActivity] = useState([]);
+    useEffect(() => {
+        async function recentActivity(){
+            const response = await api.get("profiles/activity/", {
+                params: { "paramsAttr" : "234567" }
+            })
+            console.log( response.data );
+            setActivity( response.data );
+        }
+    
+        recentActivity();
+
+    }, [])
+
     return (
       <>
         <div className="mt-5 p-5">
@@ -130,36 +99,36 @@ const Overview = () => {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {transactions.map((transaction) => (
-                          <tr key={transaction.id} className="bg-white">
+                        {activity.map((act) => (
+                          <tr key={act.id} className="bg-white">
                             <td className="max-w-0 w-full px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                               <div className="flex">
-                                <Link to={transaction.href} className="group inline-flex space-x-2 truncate text-sm">
+                                <Link to={act.href} className="group inline-flex space-x-2 truncate text-sm">
                                   <UserCircleIcon
                                     className="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                                     aria-hidden="true"
                                   />
                                   <p className="text-gray-500 truncate group-hover:text-gray-900">
-                                    {transaction.name}
+                                    {act.name}
                                   </p>
                                 </Link>
                               </div>
                             </td>
                             <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                              <span className="text-gray-900 font-medium">{transaction.mac_address} </span>
+                              <span className="text-gray-900 font-medium">{act.mac_address} </span>
                             </td>
                             <td className="hidden px-6 py-4 whitespace-nowrap text-sm text-gray-500 md:block">
                               <span
                                 className={classNames(
-                                  statusStyles[transaction.status],
+                                  statusStyles[act.status],
                                   'inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-medium capitalize'
                                 )}
                               >
-                                {transaction.status}
+                                {act.status}
                               </span>
                             </td>
                             <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                              <time dateTime={transaction.datetime}>{transaction.date}</time>
+                              <time dateTime={act.datetime}>{act.date}</time>
                             </td>
                           </tr>
                         ))}

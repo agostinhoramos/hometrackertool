@@ -14,10 +14,14 @@
 - <b>/var/opt/hometrackertool$</b> poetry install
 - <b>/var/opt/hometrackertool$</b> cd hometrackertool/frontend
 - <b>/var/opt/hometrackertool/hometrackertool/frontend$</b> npm install
+- <b>/var/opt/hometrackertool/hometrackertool/frontend$</b> sudo npm install -g --unsafe-perm=true --allow-root
+- <b>/var/opt/hometrackertool/hometrackertool/frontend$</b> sudo chown -R $USER:$USER /var/opt/hometrackertool/*
 - <b>/var/opt/$</b> cd /var/opt/hometrackertool
 - <b>/var/opt/hometrackertool$</b> . start.sh
 
 ## Tecnologies:
+
+- Poetry 1.1.13
 - NodeJS 14.x
 - Python 3.7
 - Django 3.2
