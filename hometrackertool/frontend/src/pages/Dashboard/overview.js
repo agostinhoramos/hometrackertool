@@ -9,12 +9,6 @@ import {
 
 import api from '../../services/api';
 
-const cards = [
-  { name: 'People Inside', icon: UserAddIcon, background: 'bg-green-100', color: 'text-green-800', number: 5, href: "/#view_more" },
-  { name: 'People Pending', icon: UserIcon, background: 'bg-yellow-100', color: 'text-yellow-800', number: 0, href: "/#view_more" },
-  { name: 'People Outside', icon: UserRemoveIcon, background: 'bg-gray-100', color: 'text-gray-800', number: 2, href: "/#view_more" },
-]
-
 const statusStyles = {
   'inside': 'bg-green-100 text-green-800',
   'Pending': 'bg-yellow-100 text-yellow-800',
@@ -26,18 +20,50 @@ function classNames(...classes) {
 }
 
 const Overview = () => {
+
+    const [overview, setOverview] = useState([]);
+    const [pagination, setPagination] = useState([]);
     const [activity, setActivity] = useState([]);
+    
     useEffect(() => {
         async function recentActivity(){
             const response = await api.get("profiles/activity/", {
-                params: { "paramsAttr" : "234567" }
+              headers: { }
             })
-            console.log( response.data );
-            setActivity( response.data );
+            
+            setActivity( response.data.row );
+            setPagination({
+              size: response.data.totalRow,
+              index: response.data.index,
+              limit: response.data.limit
+            });
+        }
+        async function overviewAsync(){
+            const response = await api.get("overview/", {
+              headers: { }
+            })
+            
+            setOverview([
+              { 
+                name: 'People Inside', icon: UserAddIcon, 
+                background: 'bg-green-100', color: 'text-green-800', 
+                number: response.data.inside, href: "/#inside" 
+              },
+              { 
+                name: 'People Pending', icon: UserIcon, 
+                background: 'bg-yellow-100', color: 'text-yellow-800', 
+                number: response.data.pending, href: "/#pending" 
+              },
+              { 
+                name: 'People Outside', icon: UserRemoveIcon, 
+                background: 'bg-gray-100', color: 'text-gray-800', 
+                number: response.data.outside, href: "/#outside" 
+              },
+            ]);
         }
     
+        overviewAsync();
         recentActivity();
-
     }, [])
 
     return (
@@ -48,7 +74,7 @@ const Overview = () => {
               <h2 className="text-lg leading-6 font-medium mb-5 text-gray-900">Overview</h2>
               <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {/* Card */}
-                {cards.map((card) => (
+                {overview.map((card) => (
                   <div key={card.name} className="bg-white overflow-hidden shadow rounded-lg">
                     <div className={`p-5 ${card.background}`}>
                       <div className={`flex items-center`} >
@@ -141,8 +167,8 @@ const Overview = () => {
                     >
                       <div className="hidden sm:block">
                         <p className="text-sm text-gray-700">
-                          Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
-                          <span className="font-medium">20</span> results
+                          Showing <span className="font-medium">{ pagination.index }</span> to <span className="font-medium">{ pagination.limit }</span> of{' '}
+                          <span className="font-medium">{ pagination.size }</span> results
                         </p>
                       </div>
                       <div className="flex-1 flex justify-between sm:justify-end">

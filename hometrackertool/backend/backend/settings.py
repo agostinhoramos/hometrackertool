@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-y+ejsmhn4p6)@@$f-93@&y_1#6ei+jl2x@a4g4v7@w&)9nv+mt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["hometrackertool.local", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "hometrackertool.local", 
+    "127.0.0.1"
+]
 
 # Application definition
 
@@ -36,19 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "corsheaders",
+    'corsheaders',
     'core',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "corsheaders.middleware.CorsPostCsrfMiddleware",
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -71,7 +75,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-CORS_ALLOWED_ORIGINS = []
+CORS_ALLOWED_ORIGINS = [
+    'http://hometrackertool.local',
+]
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
 
 
 # Database

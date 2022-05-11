@@ -16,44 +16,55 @@ def ProfilesView(request):
         profile = Profile.objects.all()
         serializer = EntityProfileSerializer(profile, many=True)
         response = JsonResponse(serializer.data, safe=False)
-        response["Access-Control-Allow-Origin"] = "*"
-        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
-        response["Access-Control-Max-Age"] = "1000"
-        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return response
     return JsonResponse({})
 
 
 def ProfilesActivityView(request):
     if request.method == 'GET':
-        params = request.body
+        params = request.content_params
         print( 
             params
         )
-        data = [
-            {
-                "id": 1,
-                "name": 'Agostinho Ramos',
-                "href": '#',
-                "mac_address": '24:11:45:E5:5B:F9',
-                "status": 'inside',
-                "date": 'July 11, 2020',
-                "datetime": '2020-07-11',
-            },
-            {
-                "id": 2,
-                "name": 'Protásio Pina',
-                "href": '#',
-                "mac_address": '86:05:34:FA:B5:30',
-                "status": 'Pending',
-                "date": 'July 11, 2020',
-                "datetime": '2020-07-11',
-            }
-        ]
+        data = {
+            "row" : [
+                {
+                    "id": 1,
+                    "name": 'Agostinho Ramos',
+                    "href": '#',
+                    "mac_address": '24:11:45:E5:5B:F9',
+                    "status": 'inside',
+                    "date": 'July 11, 2020',
+                    "datetime": '2020-07-11',
+                },
+                {
+                    "id": 2,
+                    "name": 'Protásio Pina',
+                    "href": '#',
+                    "mac_address": '86:05:34:FA:B5:30',
+                    "status": 'Pending',
+                    "date": 'July 11, 2020',
+                    "datetime": '2020-07-11',
+                }
+            ],
+            "totalRow" : 23,
+            "index" : 1,
+            "limit" : 10
+        }
+
+        for _ in range(0, 8):
+            data["row"].append( data["row"][1] )
+
         response = JsonResponse(data, safe=False)
-        response["Access-Control-Allow-Origin"] = "*"
-        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
-        response["Access-Control-Max-Age"] = "1000"
-        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return response
     return JsonResponse({})
+
+def OverviewView(request):
+    if request.method == 'GET':
+        data = {
+            "inside" : 4,
+            "outside" : 3,
+            "pending" : 1,
+        }
+        response = JsonResponse(data, safe=False)
+        return response
