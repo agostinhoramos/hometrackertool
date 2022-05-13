@@ -1,5 +1,6 @@
-import { useState } from 'react'
 import { Switch } from '@headlessui/react'
+import React, { useEffect, useState } from 'react'
+import api from '../../services/api';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -9,6 +10,19 @@ const Settings = () => {
 
     const [automaticTimezoneEnabled, setAutomaticTimezoneEnabled] = useState(true)
     const [autoUpdateApplicantDataEnabled, setAutoUpdateApplicantDataEnabled] = useState(false)
+    const [settings, setSettings] = useState({})
+
+    useEffect(() => {
+      async function settingsAsync(){
+          const response = await api.get("settings/", {
+              params: {}
+          })
+          console.log( response.data );
+          setSettings( response.data );
+      }
+      settingsAsync();
+    }, [])
+
 
     return(
         <>
@@ -31,7 +45,7 @@ const Settings = () => {
                       <div className="py-4">
                         <dt className="text-sm font-medium text-gray-500">SSID</dt>
                         <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          <span className="flex-grow">CASA RAMOS</span>
+                        <span className="flex-grow">{ "settings.network.ssid" }</span>
                           <span className="ml-4 flex-shrink-0">
                             <button
                               type="button"
@@ -45,7 +59,7 @@ const Settings = () => {
                       <div className="py-4">
                         <dt className="text-sm font-medium text-gray-500">Password</dt>
                         <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          <span className="flex-grow">ngueTela29</span>
+                          <span className="flex-grow">{ "pass" }</span>
                           <span className="ml-4 flex-shrink-0">
                             <button
                               type="button"
@@ -136,14 +150,14 @@ const Settings = () => {
                           Auto-update applicant data
                         </Switch.Label>
                         <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                          <Switch
-                            checked={autoUpdateApplicantDataEnabled}
-                            onChange={setAutoUpdateApplicantDataEnabled}
-                            className={classNames(
-                              autoUpdateApplicantDataEnabled ? 'bg-purple-600' : 'bg-gray-200',
-                              'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-auto'
-                            )}
-                          >
+                            <Switch
+                              checked={autoUpdateApplicantDataEnabled}
+                              onChange={setAutoUpdateApplicantDataEnabled}
+                              className={classNames(
+                                autoUpdateApplicantDataEnabled ? 'bg-purple-600' : 'bg-gray-200',
+                                'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-auto'
+                              )}
+                            >
                             <span
                               aria-hidden="true"
                               className={classNames(

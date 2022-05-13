@@ -5,12 +5,16 @@ import { PlusSmIcon as PlusSmIconOutline } from '@heroicons/react/outline'
 
 import api from '../../services/api';
 
-const status = ['inside', 'outside', 'pending']
+const status = [
+    'outside', 
+    'inside', 
+    'pending'
+]
 
 const statusStyles = {
-    0 : 'bg-green-100 text-green-800',
+    0 : 'bg-gray-100 text-gray-800',
+    1 : 'bg-green-100 text-green-800',
     2 : 'bg-yellow-100 text-yellow-800',
-    1 : 'bg-gray-100 text-gray-800',
 }
 
 const default_person_photo = "/icons8-user-64.png";

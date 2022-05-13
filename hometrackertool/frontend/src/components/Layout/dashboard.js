@@ -36,7 +36,7 @@ function classNames(...classes) {
 }  
 
 
-const Layout = () => {
+const Dashboard = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const location = useLocation();
 
@@ -272,4 +272,4 @@ const Layout = () => {
     )
 };
 
-export default Layout;
+export default Dashboard;

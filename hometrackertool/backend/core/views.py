@@ -7,10 +7,6 @@ import io, jwt, sys, datetime, json, math
 from .models import *
 from .serializers import *
 
-# from dotenv import dotenv_values
-# _env = dotenv_values(".env.local")
-# sys.path.append( _env["ROOT_PATH"] )
-
 def ProfilesView(request):
     if request.method == 'GET':
         profile = Profile.objects.all()
@@ -18,7 +14,6 @@ def ProfilesView(request):
         response = JsonResponse(serializer.data, safe=False)
         return response
     return JsonResponse({})
-
 
 def ProfilesActivityView(request):
     if request.method == 'GET':
@@ -63,8 +58,29 @@ def OverviewView(request):
     if request.method == 'GET':
         data = {
             "inside" : 4,
-            "outside" : 3,
+            "outside" : 2,
             "pending" : 1,
         }
         response = JsonResponse(data, safe=False)
         return response
+
+def SettingsView(request):
+    if request.method == 'GET':
+        data = {
+            "network" : {
+                "ip_address" : "192.168.4.1",
+                "ssid" : "CASA RAMOS",
+                "pass" : "ngueTela"
+            },
+            "account" : {
+                "lang" : 1,
+                "country" : 1,
+                "date_format" : "DD-MM-YYYY",
+                "network_limit" : 10,
+                "auto_timezone" : True,
+                "auto_update_data" : False
+            }
+        }
+        response = JsonResponse(data, safe=False)
+        return response
+    return JsonResponse({})

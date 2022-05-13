@@ -10,6 +10,16 @@ if [ $enable_python_poetry -ge 1 ]; then
     source $HOME/.poetry/env
 fi                                                                                                                                                                       
 
+# Install Redis
+if [ $enable_redis -ge 1 ]; then
+    curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+    sudo apt-get update
+    sudo apt-get install redis
+    sleep 1
+    redis-server
+fi
+
 # Install nmap
 if [ $enable_nmap -ge 1 ]; then
     sudo apt install nmap
