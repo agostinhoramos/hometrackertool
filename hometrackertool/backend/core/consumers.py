@@ -2,7 +2,6 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 
-
 class ChannelConsumer(WebsocketConsumer):
     def connect(self):
         self.channel_id = self.scope['url_route']['kwargs']['channel_id']
